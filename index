@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunstkurs - Malkurs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+        }
+
+        header {
+            background: linear-gradient(135deg, #d4845c 0%, #8b4513 50%, #654321 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #d4845c 0%, #c9723e 50%, #8b4513 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #8b4513;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #8b4513;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5e6d3 0%, #ede0d3 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #c9723e;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: #8b4513;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #3a3a3a 0%, #1a1a1a 100%);
+            color: #f5e6d3;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, #f5e6d3 0%, #ede0d3 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border-left: 5px solid #d4845c;
+        }
+
+        .quote-section p {
+            font-size: 1.3rem;
+            color: #8b4513;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .quote-author {
+            color: #c9723e;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .calendar-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .calendar-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .calendar-view {
+            background: #f5e6d3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid #d4845c;
+        }
+
+        .calendar-view h3 {
+            color: #8b4513;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            color: #8b4513;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day:hover {
+            background: #d4845c;
+            color: white;
+        }
+
+        .calendar-day.available {
+            background: #e8f5e9;
+            font-weight: bold;
+        }
+
+        .calendar-day.available:hover {
+            background: #c9723e;
+            color: white;
+        }
+
+        .calendar-day.selected {
+            background: #8b4513;
+            color: white;
+            border-color: #d4845c;
+        }
+
+        .calendar-day.other-month {
+            color: #ccc;
+            cursor: default;
+            background: #fafafa;
+        }
+
+        .booking-info {
+            background: #ede0d3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid #d4845c;
+        }
+
+        .booking-info h3 {
+            color: #8b4513;
+            margin-bottom: 1rem;
+        }
+
+        .booking-courses {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-option {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 2px solid #d4845c;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .course-option:hover {
+            background: #f5e6d3;
+            border-color: #8b4513;
+        }
+
+        .course-option.selected {
+            background: #8b4513;
+            color: white;
+            border-color: #8b4513;
+        }
+
+        .course-name {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .course-price {
+            font-size: 0.9rem;
+            color: #c9723e;
+        }
+
+        .course-option.selected .course-price {
+            color: #f5e6d3;
+        }
+
+        .booking-summary {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #d4845c;
+        }
+
+        .summary-item {
+            margin-bottom: 0.5rem;
+            color: #2c2c2c;
+        }
+
+        .summary-label {
+            font-weight: bold;
+            color: #8b4513;
+        }
+
+        .payment-button {
+            background: linear-gradient(135deg, #d4845c 0%, #8b4513 100%);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .payment-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .admin-panel {
+            margin-top: 1rem;
+            background: #fff6ec;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px dashed #d4845c;
+        }
+
+        .admin-panel h4 {
+            margin-bottom: 0.5rem;
+            color: #8b4513;
+        }
+
+        .admin-dates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-date-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 0.4rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+
+        .admin-export {
+            width: 100%;
+            height: 5rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calendar-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .quote-section p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🎨 Kunstkurs</div>
+            <ul>
+                <li><a href="#home">Startseite</a></li>
+                <li><a href="#features">Kurse</a></li>
+                <li><a href="#about">Über uns</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>Willkommen zu unserem Malkurs</h1>
+        <p>Entdecke deine künstlerischen Fähigkeiten und lerne von professionellen Künstlern</p>
+        <a href="#features" class="cta-button">Jetzt anmelden</a>
+    </section>
+
+    <main>
+        <section class="quote-section">
+            <p id="daily-quote">Laden...</p>
+            <div class="quote-author" id="quote-author"></div>
+        </section>
+
+        <section id="features" class="section">
+            <h2>Unsere Malkurse</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>🖌️ Anfänger Kurs</h3>
+                    <p>Perfekt für Anfänger. Lerne die Grundlagen der Malerei, Farbtheorie und verschiedene Maltechniken. Keine Vorkenntnisse erforderlich.</p>
+                </div>
+                <div class="card">
+                    <h3>🎨 Fortgeschrittene</h3>
+                    <p>Entwickle deine Fähigkeiten weiter. Arbeite an komplexeren Komposition, Licht und Schatten sowie persönlichem Stil.</p>
+                </div>
+                <div class="card">
+                    <h3>✨ Spezialisierte Techniken</h3>
+                    <p>Meistere spezialisierte Techniken wie Aquarell, Acryl, Öl oder digitale Malerei mit erfahrenen Künstlern.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h2>Über unseren Kunstkurs</h2>
+            <p>Unser Kunstkurs ist eine Gemeinschaft von kreativen Menschen, die ihre künstlerischen Fähigkeiten entwickeln möchten. Mit erfahrenen Lehrkräften, modernen Kunstmaterialien und einer inspirierenden Umgebung helfen wir dir, dein volles kreatives Potenzial zu entfalten. Ob du zum ersten Mal einen Pinsel in die Hand nimmst oder bereits Erfahrung hast – bei uns findest du den perfekten Kurs für dein Level.</p>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Kontakt & Anmeldung</h2>
+            <p>Interessiert an unserem Kunstkurs? Kontaktiere uns unter <strong>kontakt@kunstkurs.de</strong> oder rufe uns an unter <strong>+49 (123) 456-7890</strong></p>
+            <p style="margin-top: 1rem; color: #c9723e;"><strong>Nächster Kurs beginnt: Januar 2026</strong></p>
+        </section>
+
+        <section id="booking" class="section">
+            <h2>Kurstermine buchen</h2>
+            <div class="calendar-container">
+                <div class="calendar-wrapper">
+                    <!-- Kalender -->
+                    <div class="calendar-view">
+                        <h3 id="calendar-month">Dezember 2025</h3>
+                        <div class="calendar-grid" id="calendar-grid"></div>
+                        <button onclick="previousMonth()" style="width: 48%; padding: 0.5rem; background: #d4845c; color: white; border: none; border-radius: 4px; cursor: pointer;">← Vorheriger</button>
+                        <button onclick="nextMonth()" style="width: 48%; padding: 0.5rem; background: #d4845c; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 4%;">Nächster →</button>
+                    </div>
+
+                    <!-- Buchungsformular -->
+                    <div class="booking-info">
+                        <h3>Kurswahl & Bezahlung</h3>
+
+                        <h4 style="color: #8b4513; margin-top: 1rem; margin-bottom: 0.5rem;">Kurs:</h4>
+                        <div class="booking-courses" id="course-options">
+                            <div class="course-option" id="default-course" onclick="selectCourse(this, 'Kreativ-Malkurs', 54)">
+                                <div class="course-name">🎨 Kreativ-Malkurs</div>
+                                <div class="course-price">54,00 €</div>
+                            </div>
+                        </div>
+
+                        <h4 style="color: #8b4513; margin-bottom: 0.5rem;">Deine Buchung:</h4>
+                        <div class="booking-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Datum:</span>
+                                <span id="selected-date">Bitte Datum wählen</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Kurs:</span>
+                                <span id="selected-course">Bitte Kurs wählen</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Preis:</span>
+                                <span id="selected-price">0,00 €</span>
+                            </div>
+                        </div>
+
+                        <button class="payment-button" id="payment-btn" onclick="processPayment()" disabled>
+                            Zur Zahlung → Stripe
+                        </button>
+                        <p style="font-size: 0.9rem; color: #666; margin-top: 1rem; text-align: center;">Sichere Zahlungsabwicklung über Stripe</p>
+
+                        <div class="admin-panel" id="admin-panel">
+                            <h4>Verfügbare Kurstermine (Verwaltung)</h4>
+                            <div style="display:flex; gap:0.5rem; margin-bottom:0.5rem;">
+                                <input type="date" id="admin-date-input" style="flex:1; padding:0.4rem; border-radius:4px; border:1px solid #ddd;">
+                                <button onclick="addAvailableDateFromInput()" style="background:#d4845c; color:white; border:none; padding:0.45rem 0.8rem; border-radius:4px; cursor:pointer;">Hinzufügen</button>
+                            </div>
+                            <div class="admin-dates-list" id="admin-dates-list"></div>
+                            <div>
+                                <label for="admin-export" style="font-size:0.9rem; color:#666;">Export (kopiere dieses Array in deinen Code):</label>
+                                <textarea id="admin-export" class="admin-export" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Kunstkurs. Alle Rechte vorbehalten.</p>
+        <p>Mit Leidenschaft für Kunst & Kreativität</p>
+    </footer>
+
+    <script>
+        // Tägliche Kunstsprüche
+        const quotes = [
+            { text: "Kunst ist nicht das, was Sie sehen, sondern das, was Sie denken lässt.", author: "Joan Miró" },
+            { text: "Die Farbe ist mein Tag-und-Nacht-Thema, mein Leben.", author: "Joan Mitchell" },
+            { text: "Jeder Kind ist ein Künstler. Das Problem liegt darin, ein Künstler zu bleiben, sobald man aufwächst.", author: "Pablo Picasso" },
+            { text: "Kunstfreiheit ist die Grundlage aller anderen Freiheiten.", author: "John Dewey" },
+            { text: "Die beste Zeit, um einen Baum zu pflanzen, war vor 20 Jahren. Die zweite beste Zeit ist jetzt. Das gilt auch für Kunst.", author: "Chinesisches Sprichwort" },
+            { text: "Kunst wäscht den Staub des alltäglichen Lebens von der Seele.", author: "Pablo Picasso" },
+            { text: "Kultur schafft das Verständnis und die Liebe zwischen verschiedenen Völkern.", author: "Pearl S. Buck" },
+            { text: "Ein Kunstwerk ist eine Sache, bei der die Form wichtiger ist als der Stoff.", author: "Aristoteles" },
+            { text: "Die Kunst ist die höchste Form der Hoffnung.", author: "Gerhard Richter" },
+            { text: "Kreativität ist die Intelligenz, die Spaß hat.", author: "Albert Einstein" },
+            { text: "In einem verrückten Welt ist die Kunst die einzige Wahnsinn, die erlaubt ist.", author: "Frida Kahlo" },
+            { text: "Das Material ist nicht das Problem. Die Idee ist das Material.", author: "Lawrence Weiner" },
+            { text: "Kreativität nimmt Mut - den Mut, alte Ideen loszulassen.", author: "Maya Angelou" },
+            { text: "Kultur ist das Gedächtnis eines Volkes.", author: "Edwarda Brown" },
+            { text: "Kunst macht sichtbar, was real ist.", author: "Wassily Kandinsky" },
+            { text: "Die schönsten Farbkombinationen finden sich in der Natur.", author: "Sherwin Williams" },
+            { text: "Jeder Mensch ist ein Künstler in seinen eigenen Träumen.", author: "Unbekannt" },
+            { text: "Kultur ist die Blüte der Zivilisation.", author: "Edward Sapir" },
+            { text: "Kunstwerke sind Fenster in die Seele des Künstlers.", author: "Salvador Dalí" },
+            { text: "Die beste Kunstform ist das Leben selbst.", author: "Oscar Wilde" },
+            { text: "Farbe ist eine Kraft, die unmittelbar auf die Seele wirkt.", author: "Wassily Kandinsky" },
+            { text: "Kultur ist die Leidenschaft, die die Menschheit zusammenbindet.", author: "Maya Angelou" },
+            { text: "Künstler sehen die Schönheit in Dingen, die andere übersehen.", author: "Vincent van Gogh" },
+            { text: "Die Kunst ist der Weg, um Wahrheit auszudrücken, die Worte nicht können.", author: "Gustav Stickley" },
+            { text: "Ohne Tradition ist die Kunst nicht möglich. Ohne Revolution auch nicht.", author: "John Berger" },
+            { text: "Kreativität ist Intelligenz, die Spaß beim Spielen hat.", author: "Carl Jung" },
+            { text: "Die Kultur eines Landes spiegelt sich in seiner Kunst wider.", author: "Jawaharlal Nehru" },
+            { text: "Malen ist Poesie, die man sieht statt hört.", author: "Leonardo da Vinci" },
+            { text: "Kunst ist nicht das Denken, sondern das Tun.", author: "George Bernard Shaw" },
+            { text: "Kreativität ist die Kraft, etwas Neues zu erschaffen.", author: "Maya Angelou" }
+        ];
+
+        // Funktion zum Abrufen des heutigen Spruchs
+        function getDailyQuote() {
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+            const quoteIndex = dayOfYear % quotes.length;
+            return quotes[quoteIndex];
+        }
+
+        // Spruch beim Laden der Seite anzeigen
+        document.addEventListener('DOMContentLoaded', function() {
+            const quote = getDailyQuote();
+            document.getElementById('daily-quote').textContent = `"${quote.text}"`;
+            document.getElementById('quote-author').textContent = `— ${quote.author}`;
+            
+            // Verfügbare Termine laden und Kalender initialisieren
+            loadAvailableDates();
+            renderCalendar();
+
+            // Admin-Liste initialisieren
+            updateAdminList();
+
+            // Voreinstellung: wähle Standard-Kurs
+            const defaultCourseEl = document.getElementById('default-course');
+            if (defaultCourseEl) {
+                selectCourse(defaultCourseEl, 'Kreativ-Malkurs', 54);
+            }
+        });
+
+        // Kalender-Variablen
+        let currentDate = new Date();
+        let selectedDate = null;
+        let selectedCourse = null;
+        let selectedPrice = 0;
+
+        // Verfügbare Termine: lade aus localStorage oder generiere Standard (nächste 90 Tage: Fr/Sa)
+        let availableDates = [];
+        function loadAvailableDates() {
+            const raw = localStorage.getItem('availableDates');
+            if (raw) {
+                try {
+                    const arr = JSON.parse(raw);
+                    availableDates = arr.map(s => new Date(s + 'T00:00:00'));
+                    return;
+                } catch (e) {
+                    console.warn('Fehler beim Laden gespeicherter Termine, generiere Standardtermine', e);
+                }
+            }
+
+            // Standard: nächste 90 Tage, freitags und samstags
+            availableDates = [];
+            for (let i = 0; i < 90; i++) {
+                const d = new Date();
+                d.setDate(d.getDate() + i);
+                const day = d.getDay();
+                if (day === 5 || day === 6) { // Freitag und Samstag
+                    availableDates.push(new Date(d));
+                }
+            }
+            saveAvailableDates();
+        }
+
+        function saveAvailableDates() {
+            const arr = availableDates.map(d => d.toISOString().slice(0,10)); // YYYY-MM-DD
+            localStorage.setItem('availableDates', JSON.stringify(arr));
+            updateAdminExport();
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Header aktualisieren
+            const monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+                              'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+            document.getElementById('calendar-month').textContent = monthNames[month] + ' ' + year;
+
+            // Kalender-Grid löschen
+            const calendarGrid = document.getElementById('calendar-grid');
+            calendarGrid.innerHTML = '';
+
+            // Wochentag-Header
+            const dayHeaders = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+            dayHeaders.forEach(header => {
+                const div = document.createElement('div');
+                div.className = 'calendar-day-header';
+                div.textContent = header;
+                calendarGrid.appendChild(div);
+            });
+
+            // Erste und letzte Tag des Monats
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const firstDayOfWeek = (firstDay.getDay() + 6) % 7; // Montag = 0
+            
+            // Tage aus vorherigem Monat
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+            for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+                const div = document.createElement('div');
+                div.className = 'calendar-day other-month';
+                div.textContent = prevMonthLastDay - i;
+                calendarGrid.appendChild(div);
+            }
+
+            // Tage des aktuellen Monats
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const div = document.createElement('div');
+                div.className = 'calendar-day';
+                div.textContent = day;
+
+                const dateToCheck = new Date(year, month, day);
+                const isAvailable = availableDates.some(d => 
+                    d.getFullYear() === dateToCheck.getFullYear() &&
+                    d.getMonth() === dateToCheck.getMonth() &&
+                    d.getDate() === dateToCheck.getDate()
+                );
+
+                if (isAvailable && dateToCheck > new Date()) {
+                    div.classList.add('available');
+                    div.onclick = () => selectDate(dateToCheck);
+                }
+
+                if (selectedDate && selectedDate.toDateString() === dateToCheck.toDateString()) {
+                    div.classList.add('selected');
+                }
+
+                calendarGrid.appendChild(div);
+            }
+
+            // Tage des nächsten Monats
+            const totalCells = calendarGrid.children.length - 7; // -7 für Header
+            const remainingCells = 35 - totalCells;
+            for (let day = 1; day <= remainingCells; day++) {
+                const div = document.createElement('div');
+                div.className = 'calendar-day other-month';
+                div.textContent = day;
+                calendarGrid.appendChild(div);
+            }
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function selectDate(date) {
+            selectedDate = date;
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('selected-date').textContent = date.toLocaleDateString('de-DE', options);
+            renderCalendar();
+            updatePaymentButton();
+        }
+
+        function selectCourse(element, courseName, price) {
+            // Entferne 'selected' von allen Kursen
+            document.querySelectorAll('.course-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Füge 'selected' zum geklickten Kurs hinzu
+            element.classList.add('selected');
+            
+            selectedCourse = courseName;
+            selectedPrice = price;
+            
+            document.getElementById('selected-course').textContent = courseName;
+            document.getElementById('selected-price').textContent = price.toFixed(2) + ' €';
+            
+            updatePaymentButton();
+        }
+
+        // Admin-Funktionen: Termine hinzufügen/entfernen und Export aktualisieren
+        function addAvailableDateFromInput() {
+            const input = document.getElementById('admin-date-input');
+            if (!input.value) return;
+            addAvailableDate(input.value);
+            input.value = '';
+        }
+
+        function addAvailableDate(dateString) {
+            const d = new Date(dateString + 'T00:00:00');
+            if (isNaN(d)) return;
+            // Nur eindeutige Daten
+            const exists = availableDates.some(ad => ad.toDateString() === d.toDateString());
+            if (!exists) {
+                availableDates.push(d);
+                // sortieren
+                availableDates.sort((a,b) => a - b);
+                saveAvailableDates();
+                renderCalendar();
+                updateAdminList();
+            }
+        }
+
+        function removeAvailableDate(dateString) {
+            availableDates = availableDates.filter(d => d.toISOString().slice(0,10) !== dateString);
+            saveAvailableDates();
+            renderCalendar();
+            updateAdminList();
+        }
+
+        function updateAdminList() {
+            const list = document.getElementById('admin-dates-list');
+            list.innerHTML = '';
+            const arr = availableDates.map(d => d.toISOString().slice(0,10));
+            arr.forEach(dateStr => {
+                const div = document.createElement('div');
+                div.className = 'admin-date-item';
+                const left = document.createElement('div');
+                left.textContent = new Date(dateStr+'T00:00:00').toLocaleDateString('de-DE', { weekday:'short', year:'numeric', month:'2-digit', day:'2-digit' });
+                const btn = document.createElement('button');
+                btn.textContent = 'Entfernen';
+                btn.style.background = '#f44336';
+                btn.style.color = 'white';
+                btn.style.border = 'none';
+                btn.style.padding = '0.25rem 0.5rem';
+                btn.style.borderRadius = '4px';
+                btn.style.cursor = 'pointer';
+                btn.onclick = () => removeAvailableDate(dateStr);
+                div.appendChild(left);
+                div.appendChild(btn);
+                list.appendChild(div);
+            });
+            updateAdminExport();
+        }
+
+        function updateAdminExport() {
+            const exportEl = document.getElementById('admin-export');
+            if (!exportEl) return;
+            const arr = availableDates.map(d => d.toISOString().slice(0,10));
+            exportEl.value = JSON.stringify(arr, null, 2);
+        }
+
+        function updatePaymentButton() {
+            const btn = document.getElementById('payment-btn');
+            if (selectedDate && selectedCourse) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        function processPayment() {
+            // WICHTIG: Ersetze dies mit deinem echten Stripe-Link! (für diesen Kurs)
+            const defaultStripeLink = "https://buy.stripe.com/eVqaEXfamagp7eE8WjbQY00"; // <- Standard-Link (ersetzen)
+
+            const stripeLinks = {
+                'Kreativ-Malkurs': defaultStripeLink
+            };
+
+            const stripeLink = stripeLinks[selectedCourse] || defaultStripeLink;
+
+            if (!stripeLink || !stripeLink.startsWith('https://')) {
+                alert("Ungültiger Stripe-Link: Bitte überprüfe die URL im Code.");
+                return;
+            }
+
+            // Buchungsdetails in Session Storage speichern (zur späteren Verwendung)
+            const bookingDetails = {
+                date: selectedDate ? selectedDate.toLocaleDateString('de-DE') : null,
+                course: selectedCourse,
+                price: selectedPrice
+            };
+            sessionStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
+
+            // Öffne Stripe-Link in neuem Tab
+            try {
+                window.open(stripeLink, '_blank');
+            } catch (err) {
+                console.error('Fehler beim Öffnen des Stripe-Links:', err);
+                window.location.href = stripeLink;
+            }
+        }
+    </script>
+</body>
+</html>
